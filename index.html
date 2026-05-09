@@ -16,7 +16,6 @@
       --safe-bottom: env(safe-area-inset-bottom);
       --bg: #030305;
       --red: #ff2d20;
-      --red-soft: #ff5a45;
       --white: #ffffff;
       --font-main: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-serif: Georgia, "Times New Roman", serif;
@@ -89,7 +88,6 @@
       pointer-events: none;
     }
 
-    /* Мягкий проекторный свет без жесткой кривой полосы сверху */
     .ambient::before {
       content: "";
       position: absolute;
@@ -273,7 +271,7 @@
       display: block;
       color: #fff;
       font-family: var(--font-script);
-      font-size: clamp(44px, 10vw, 72px);
+      font-size: clamp(56px, 13vw, 92px);
       font-weight: 700;
       line-height: .98;
       letter-spacing: -.045em;
@@ -289,8 +287,6 @@
       z-index: 8;
       width: min(78vw, 390px);
       aspect-ratio: 9 / 16;
-      height: min(72svh, 690px);
-      max-height: 690px;
       flex: 0 0 auto;
       pointer-events: none;
       isolation: isolate;
@@ -334,14 +330,8 @@
       pointer-events: none;
     }
 
-    .film-perf.left {
-      left: -26px;
-      border-radius: 18px 0 0 18px;
-    }
-    .film-perf.right {
-      right: -26px;
-      border-radius: 0 18px 18px 0;
-    }
+    .film-perf.left { left: -26px; border-radius: 18px 0 0 18px; }
+    .film-perf.right { right: -26px; border-radius: 0 18px 18px 0; }
 
     .film-perf::before {
       content: "";
@@ -370,10 +360,23 @@
         0 0 180px rgba(255,45,32,.14),
         inset 0 1px 0 rgba(255,255,255,.10);
       animation: screenIn 850ms cubic-bezier(.2,.9,.2,1) both, screenGlowPulse 6s ease-in-out 1s infinite;
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
     }
 
     .avatar-video {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 7px;
+      background: transparent;
       transform: scale(1.04);
+      border-radius: inherit;
+      clip-path: inset(0 round 40px);
+      filter: saturate(1.02) brightness(1.02) contrast(1.18) sepia(.05) hue-rotate(-8deg) drop-shadow(0 0 18px rgba(255,45,32,.18));
     }
 
     .screen::before {
@@ -382,6 +385,7 @@
       inset: 0;
       z-index: 3;
       pointer-events: none;
+      border-radius: inherit;
       background:
         linear-gradient(180deg, rgba(255,255,255,.10), transparent 18%, rgba(255,45,32,.08) 54%, rgba(0,0,0,.58)),
         radial-gradient(circle at 50% 14%, rgba(255,255,255,.12), transparent 18%),
@@ -399,25 +403,17 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), inset 0 -90px 130px rgba(0,0,0,.38), inset 0 0 100px rgba(255,45,32,.10);
     }
 
-    .avatar-video {
+    .scan-light,
+    .gloss {
       position: absolute;
       inset: 0;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      object-position: center 7px;
-      background: transparent;
-      filter: saturate(1.02) brightness(1.02) contrast(1.18) sepia(.05) hue-rotate(-8deg) drop-shadow(0 0 18px rgba(255,45,32,.18));
+      z-index: 5;
+      pointer-events: none;
+      border-radius: inherit;
     }
 
     .scan-light {
-      position: absolute;
       inset: -6%;
-      z-index: 4;
-      pointer-events: none;
-      border-radius: inherit;
       background: linear-gradient(115deg, transparent 0 32%, rgba(255,255,255,.12) 44%, rgba(255,45,32,.13) 50%, rgba(255,255,255,.05) 56%, transparent 68% 100%);
       mix-blend-mode: screen;
       transform: translateX(-95%) skewX(-14deg);
@@ -426,11 +422,6 @@
     }
 
     .gloss {
-      position: absolute;
-      inset: 0;
-      z-index: 5;
-      pointer-events: none;
-      border-radius: inherit;
       background: linear-gradient(115deg, transparent 0 28%, rgba(255,255,255,.14) 42%, transparent 56% 100%);
       transform: translateX(-80%);
       animation: glossMove 5.8s ease-in-out 1.4s infinite;
@@ -530,8 +521,8 @@
     @media (max-height: 760px) {
       .poster { padding-top: 12px; padding-bottom: 14px; }
       .title { margin-bottom: 12px; }
-      .title .script { font-size: clamp(28px, 7vw, 40px); }
-      .hero-wrap { width: min(64vw, 300px); max-height: 58svh; }
+      .title .script { font-size: clamp(38px, 10vw, 58px); }
+      .hero-wrap { width: min(64vw, 300px); }
       .credits { margin-top: 18px; }
       .credits .script { font-size: clamp(18px, 4vw, 26px); }
       .credits .name { font-size: clamp(24px, 4.8vw, 36px); }
@@ -539,36 +530,82 @@
     }
 
     @media (max-width: 430px) {
-      .avatar-video {
-        object-position: center center;
+      .page {
+        padding: max(8px, var(--safe-top)) 10px max(12px, var(--safe-bottom));
       }
 
-      .page { padding: max(8px, var(--safe-top)) 10px max(12px, var(--safe-bottom)); }
-      .poster { width: 100%; justify-content: center; padding-top: 4px; padding-bottom: 14px; overflow: visible; }
-      .title { margin-bottom: 14px; }
+      .poster {
+        width: 100%;
+        justify-content: center;
+        padding-top: 4px;
+        padding-bottom: 14px;
+        overflow: visible;
+      }
+
+      .title {
+        margin-bottom: 14px;
+      }
+
       .title .script {
-        font-size: clamp(42px, 12vw, 64px); line-height: .94; }
+        font-size: clamp(52px, 15vw, 82px);
+        line-height: .94;
+      }
+
       .hero-wrap {
         width: min(86vw, 390px);
-        height: min(66svh, 620px);
-        max-height: 620px;
       }
+
       .hero-wrap::before {
         inset: -12px;
         border-radius: 36px;
       }
-      .hero-wrap::after { width: 68%; height: 20px; bottom: -18px; filter: blur(10px); }
-      .film-perf { width: 11px; top: 10px; bottom: 10px; }
+
+      .hero-wrap::after {
+        width: 68%;
+        height: 20px;
+        bottom: -18px;
+        filter: blur(10px);
+      }
+
+      .film-perf {
+        width: 11px;
+        top: 10px;
+        bottom: 10px;
+      }
+
       .film-perf.left { left: -13px; }
       .film-perf.right { right: -13px; }
-      .film-perf::before { width: 5px; background: radial-gradient(circle, rgba(0,0,0,.98) 0 58%, transparent 62%) center top / 5px 16px repeat-y; }
+
+      .film-perf::before {
+        width: 5px;
+        background: radial-gradient(circle, rgba(0,0,0,.98) 0 58%, transparent 62%) center top / 5px 16px repeat-y;
+      }
+
       .screen {
         border-radius: 32px;
       }
-      .credits { margin-top: 18px; width: 92vw; }
+
+      .avatar-video {
+        object-position: center 7px;
+        clip-path: inset(0 round 32px);
+      }
+
+      .credits {
+        margin-top: 18px;
+        width: 92vw;
+      }
+
       .credits .script { font-size: clamp(18px, 5vw, 24px); }
       .credits .name { font-size: clamp(23px, 6.8vw, 32px); line-height: .9; }
-      .caption { width: 82vw; margin-top: 10px; font-size: 8px; letter-spacing: .08em; line-height: 1.45; }
+
+      .caption {
+        width: 82vw;
+        margin-top: 10px;
+        font-size: 8px;
+        letter-spacing: .08em;
+        line-height: 1.45;
+      }
+
       .ambient::before { width: 120vw; height: 56svh; top: 0; opacity: .58; }
       .ambient::after { width: 420px; height: 420px; bottom: -18%; filter: blur(58px); }
       .lens-flare { width: 88vw; top: 12%; opacity: .26; }
@@ -578,7 +615,13 @@
       .orb.two { width: 70px; height: 70px; right: -2%; top: 28%; }
       .light-sweep.one { left: -34%; }
       .light-sweep.two { right: -36%; }
-      .bubble { max-width: min(140px, calc(100vw - 36px)); padding: 7px 9px; border-radius: 5px; font-size: 10px; }
+
+      .bubble {
+        max-width: min(140px, calc(100vw - 36px));
+        padding: 7px 9px;
+        border-radius: 5px;
+        font-size: 10px;
+      }
     }
   </style>
 </head>
@@ -677,7 +720,7 @@
         piece.className = `confetti ${type}`.trim();
 
         const sideBias = Math.random();
-        let x = sideBias < .48 ? randomBetween(3, 18) : sideBias > .52 ? randomBetween(82, 97) : randomBetween(18, 82);
+        const x = sideBias < .48 ? randomBetween(3, 18) : sideBias > .52 ? randomBetween(82, 97) : randomBetween(18, 82);
         const isCenter = x > 28 && x < 72;
         const y = isCenter ? randomBetween(10, 26) : randomBetween(8, 92);
         const size = randomBetween(3, 7);
