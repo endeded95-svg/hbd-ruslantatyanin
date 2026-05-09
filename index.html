@@ -47,7 +47,7 @@
       place-items: center;
       padding: max(14px, var(--safe-top)) 14px max(14px, var(--safe-bottom));
       background:
-        radial-gradient(circle at 50% 18%, rgba(255, 45, 32, .24), transparent 34%),
+        radial-gradient(circle at 50% 18%, rgba(255,45,32,.24), transparent 34%),
         radial-gradient(circle at 16% 30%, rgba(255,255,255,.055), transparent 24%),
         radial-gradient(circle at 84% 76%, rgba(255,45,32,.16), transparent 32%),
         linear-gradient(180deg, #101014 0%, #07070a 48%, #010102 100%);
@@ -531,28 +531,29 @@
 
     @media (max-width: 430px) {
       .page {
-        padding: max(8px, var(--safe-top)) 10px max(12px, var(--safe-bottom));
+        padding: max(4px, var(--safe-top)) 10px max(4px, var(--safe-bottom));
       }
 
       .poster {
         width: 100%;
         justify-content: center;
-        padding-top: 4px;
-        padding-bottom: 14px;
+        padding-top: 0;
+        padding-bottom: 0;
+        gap: 10px;
         overflow: visible;
       }
 
       .title {
-        margin-bottom: 14px;
+        margin-bottom: 2px;
       }
 
       .title .script {
-        font-size: clamp(52px, 15vw, 82px);
+        font-size: clamp(46px, 13vw, 68px);
         line-height: .94;
       }
 
       .hero-wrap {
-        width: min(86vw, 390px);
+        width: min(82vw, 350px);
       }
 
       .hero-wrap::before {
@@ -591,19 +592,25 @@
       }
 
       .credits {
-        margin-top: 18px;
+        margin-top: 6px;
         width: 92vw;
       }
 
-      .credits .script { font-size: clamp(18px, 5vw, 24px); }
-      .credits .name { font-size: clamp(23px, 6.8vw, 32px); line-height: .9; }
+      .credits .script {
+        font-size: clamp(16px, 4.2vw, 22px);
+      }
+
+      .credits .name {
+        font-size: clamp(22px, 6vw, 30px);
+        line-height: .88;
+      }
 
       .caption {
         width: 82vw;
-        margin-top: 10px;
-        font-size: 8px;
-        letter-spacing: .08em;
-        line-height: 1.45;
+        margin-top: 4px;
+        font-size: 7px;
+        letter-spacing: .06em;
+        line-height: 1.2;
       }
 
       .ambient::before { width: 120vw; height: 56svh; top: 0; opacity: .58; }
